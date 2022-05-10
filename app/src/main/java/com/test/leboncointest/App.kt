@@ -2,6 +2,7 @@ package com.test.leboncointest
 
 import android.app.Application
 import com.test.leboncointest.di.apiModule
+import com.test.leboncointest.di.databaseModule
 import com.test.leboncointest.di.repoModule
 import com.test.leboncointest.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -16,6 +17,7 @@ class App : Application() {
             androidContext(this@App)
             modules(listOf(
                 apiModule,
+                databaseModule,
                 repoModule,
                 viewModelModule))
         }
