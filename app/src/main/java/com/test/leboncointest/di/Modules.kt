@@ -60,7 +60,7 @@ val databaseModule = module {
 
 val repoModule = module {
     single {
-        val albumRepository: AlbumRepository = AlbumRepositoryImpl(get())
+        val albumRepository: AlbumRepository = AlbumRepositoryImpl(get(), get())
         albumRepository
     }
 }
