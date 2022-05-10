@@ -8,6 +8,8 @@ import com.test.leboncointest.data.api.network.ServiceFactory
 import com.test.leboncointest.data.repositories.AlbumRepositoryImpl
 import com.test.leboncointest.data.api.services.AlbumServiceProvider
 import com.test.leboncointest.data.api.services.AlbumServiceProviderImpl
+import com.test.leboncointest.ui.albumlist.AlbumListViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Converter
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -44,3 +46,8 @@ val repoModule = module {
     }
 }
 
+val viewModelModule = module {
+    viewModel {
+        AlbumListViewModel(get())
+    }
+}
