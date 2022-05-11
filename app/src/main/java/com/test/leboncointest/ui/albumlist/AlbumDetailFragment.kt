@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.test.leboncointest.AlbumActivity
 import com.test.leboncointest.R
 import com.test.leboncointest.databinding.AlbumDetailBinding
+import com.test.leboncointest.utils.BundleKeys
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlbumDetailFragment : Fragment() {
@@ -34,7 +35,7 @@ class AlbumDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { arguments ->
-            viewModel.album = arguments.getParcelable("album")
+            viewModel.album = arguments.getParcelable(BundleKeys.album)
         }
     }
 

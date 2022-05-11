@@ -1,13 +1,18 @@
 package com.test.leboncointest.ui.albumlist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.test.leboncointest.AlbumActivity
 import com.test.leboncointest.R
+import com.test.leboncointest.data.models.Album
 import com.test.leboncointest.databinding.AlbumListBinding
+import com.test.leboncointest.utils.BundleKeys
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlbumListFragment : Fragment() {
@@ -24,19 +29,33 @@ class AlbumListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as AlbumActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         binding = DataBindingUtil.inflate(inflater, R.layout.album_list_fragment, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AlbumAdapter(lifecycleOwner = this)
+        val onItemClickListener = object : AlbumAdapter.OnItemClickListener {
+            override fun onItemClick(album: Album) {
+                onAlbumClick(album)
+            }
+        }
+
+        adapter = AlbumAdapter(lifecycleOwner = this, onItemClickListener = onItemClickListener)
         binding.recyclerView.adapter = adapter
 
         viewModel.albums.observe(viewLifecycleOwner) { imageBankItems ->
             adapter.setData(imageBankItems)
         }
+
+    }
+
+    fun onAlbumClick(album: Album) {
+        val navController = findNavController()
+        val bundle = bundleOf(BundleKeys.album to album)
+        navController.navigate(R.id.action_albumListFragment_to_albumDetailFragment, bundle)
     }
 }
