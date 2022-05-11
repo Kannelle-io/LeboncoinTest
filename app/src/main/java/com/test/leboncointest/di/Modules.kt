@@ -12,6 +12,7 @@ import com.test.leboncointest.data.api.services.AlbumServiceProvider
 import com.test.leboncointest.data.api.services.AlbumServiceProviderImpl
 import com.test.leboncointest.data.database.AlbumDatabase
 import com.test.leboncointest.data.database.dao.AlbumDao
+import com.test.leboncointest.ui.albumlist.AlbumDetailViewModel
 import com.test.leboncointest.ui.albumlist.AlbumListViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -68,5 +69,9 @@ val repoModule = module {
 val viewModelModule = module {
     viewModel {
         AlbumListViewModel(get())
+    }
+
+    viewModel {
+        AlbumDetailViewModel()
     }
 }
