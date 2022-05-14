@@ -1,12 +1,11 @@
 package com.test.leboncointest.ui.albumlist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.test.leboncointest.R
 import com.test.leboncointest.data.models.Album
@@ -29,7 +28,38 @@ internal class AlbumAdapter constructor(
         this.albumItemViewModels = albums?.map {
             AlbumItemViewModel(it)
         } ?: emptyList()
-        notifyDataSetChanged()
+
+
+        val oldList = this.albumItemViewModels
+        val newList = albums?.map {
+            AlbumItemViewModel(it)
+        } ?: emptyList()
+
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int {
+                return oldList.count()
+            }
+
+            override fun getNewListSize(): Int {
+                return newList.count()
+            }
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                val oldItem = oldList[oldItemPosition]
+                val newItem = newList[newItemPosition]
+                val oldItemId = oldItem.album
+                val newItemId = newItem.album
+                return oldItemId == newItemId
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                val oldItem = oldList[oldItemPosition]
+                val newItem = newList[newItemPosition]
+                return oldItem == newItem
+            }
+        })
+        this.albumItemViewModels = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
@@ -44,14 +74,6 @@ internal class AlbumAdapter constructor(
 
     override fun getItemCount(): Int {
         return albumItemViewModels.count()
-    }
-
-    private fun getAlbumItemViewModel(position: Int): AlbumItemViewModel {
-        return albumItemViewModels[position]
-    }
-
-    private fun getAlbumItemViewModels(): List<AlbumItemViewModel> {
-        return albumItemViewModels
     }
 
     override fun getLifecycle(): Lifecycle {
