@@ -7,6 +7,7 @@ import com.test.leboncointest.di.repoModule
 import com.test.leboncointest.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 class App : Application() {
 
@@ -21,5 +22,10 @@ class App : Application() {
                 repoModule,
                 viewModelModule))
         }
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        stopKoin()
     }
 }
