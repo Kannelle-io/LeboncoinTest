@@ -12,7 +12,7 @@ interface AlbumDao {
     fun getAlbums(): List<Album>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(album: Album)
+    suspend fun insert(album: Album): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(albums: List<Album>)

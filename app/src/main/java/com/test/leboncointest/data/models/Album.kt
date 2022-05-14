@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Album(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    var id: Long = 0,
     val albumId: Int,
     val title: String,
     val url: String,
