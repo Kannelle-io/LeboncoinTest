@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.test.leboncointest.AlbumActivity
@@ -25,7 +26,9 @@ class AlbumDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AlbumActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        if(activity is AppCompatActivity) {
+            (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
         binding = DataBindingUtil.inflate(inflater, R.layout.album_detail_fragment, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
