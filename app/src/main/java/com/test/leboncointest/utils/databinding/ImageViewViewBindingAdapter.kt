@@ -15,7 +15,8 @@ object ImageViewViewBindingAdapter {
         if (!url.isNullOrEmpty()) {
             val image = GlideUrl(
                 url, LazyHeaders.Builder()
-                    .addHeader("User-Agent", WebSettings.getDefaultUserAgent(imageView.context))
+                    .addHeader("User-Agent",
+                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit / 537.36(KHTML, like Gecko) Chrome  47.0.2526.106 Safari / 537.36")
                     .build()
             )
             Glide.with(imageView).load(image).into(imageView)
